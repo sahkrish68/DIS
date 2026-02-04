@@ -88,7 +88,7 @@ java Main
 
 ## Author
 
-Name - Krish Bikram Sah 
-Msc Advance Computing 
-University Id : 26006907
+- Name - Krish Bikram Sah 
+- Msc Advance Computing 
+- University Id : 26006907
 
