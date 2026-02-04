@@ -1,0 +1,41 @@
+CSC-40045 Distributed Intelligent Systems
+Coursework Part 2 – Java Agents Simulation (Contract-Net variant)
+
+1. Overview
+This implementation simulates an e-commerce shopping process with autonomous buyer agents and seller agents interacting through a broker agent. Interactions follow a variant of the Contract-Net protocol: the broker issues CFP messages, sellers reply with proposals or refusals, the broker recommends an offer, and the customer (buyer agent) makes the final decision.
+
+2. Agent Roles
+- BrokerAgent:
+  - Receives an OrderRequest with constraints (price range, quantity, delivery preference).
+  - Issues CFP to registered SellerAgents.
+  - Collects SellerReply messages (PROPOSE with Offer or REFUSE with a reason).
+  - Analyses offers and recommends the best offer using a simple scoring rule.
+  - Executes the transaction by sending ACCEPT to the chosen seller and REJECT to others.
+- BuyerAgent:
+  - Represents a customer profile and initiates a purchase through the broker.
+  - Selects the final offer (can differ from broker recommendation, e.g., prefer faster delivery).
+- RetailerSellerAgent:
+  - Represents a retailer with a local product database/inventory.
+  - Validates CFP constraints and produces an Offer or declines.
+  - Confirms accepted offers and updates stock.
+
+3. Data Model
+- Product: productId, name, unitPrice, stock, deliveryType, estimatedDays
+- OrderRequest: productName, quantity, min/max unit price, delivery preference
+- Offer: sellerId, productId, productName, unitPrice, deliveryType, estimatedDays
+- CustomerProfile: max budget and delivery preferences
+
+4. Contract-Net Interaction Steps (Method Calls)
+1) BuyerAgent submits an order to BrokerAgent.
+2) BrokerAgent sends CFP to each SellerAgent.
+3) Sellers respond with PROPOSE (Offer) or REFUSE (reason).
+4) Broker recommends the “best” offer.
+5) BuyerAgent makes the final decision and selects an offer.
+6) Broker sends ACCEPT to selected seller (REJECT to others).
+7) Seller confirms transaction and stock is updated.
+8) Console logs show each step and transaction results.
+
+5. Testing / Scenarios
+- Laptop purchase with fast delivery preference (demonstrates recommended vs chosen offer).
+- Low budget laptop purchase (demonstrates constraint filtering).
+- Mouse purchase where one seller refuses due to stock (demonstrates refusals and success).
